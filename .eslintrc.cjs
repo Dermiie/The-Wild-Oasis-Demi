@@ -13,7 +13,8 @@ module.exports = {
   plugins: ['react-refresh'],
   rules: {
     'no-constant-condition': 'warn',
-    'no-unused-vars': 'warn', // This should issue a warning for unused vars
+    'no-unused-vars': 'off',
+    'react/prop-types': 'off',
     'react-refresh/only-export-components': [
       'warn',
       { allowConstantExport: true },
