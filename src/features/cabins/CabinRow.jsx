@@ -44,12 +44,13 @@ function CabinRow({ cabin }) {
   const { image, name, maxCapacity: capacity, regularPrice, discount } = cabin;
 
   return (
-    <TableRow>
+    <TableRow role="row">
       <Img src={image}></Img>
       <Cabin>{name}</Cabin>
-      <div>Can fit up to {capacity} guests</div>
+      <div>Fits up to {capacity} guests</div>
       <Price>{formatCurrency(regularPrice)}</Price>
       <Discount>{formatCurrency(discount)}</Discount>
+      <button>Delete</button>
     </TableRow>
   );
 }

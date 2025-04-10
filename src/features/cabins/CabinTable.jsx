@@ -51,9 +51,9 @@ function CabinTable() {
         <div>Discount</div>
         <div></div>
       </TableHeader>
-      {cabins.map((cabin) => {
-        <CabinRow cabin={cabin} key={cabin.id}></CabinRow>;
-      })}
+      {cabins.map((cabin) => (
+        <CabinRow cabin={cabin} key={cabin.id}></CabinRow>
+      ))}
     </Table>
   );
 }
