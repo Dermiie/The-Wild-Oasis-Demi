@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 import { formatCurrency } from '../../utils/helpers';
-import {
-  QueryClient,
-  useMutation,
-  useQueryClient,
-} from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { deleteCabin } from '../../services/apiCabins';
 
@@ -59,15 +55,11 @@ function CabinRow({ cabin }) {
     discount,
   } = cabin;
 
-  const { isPending: isDeleting, mutate } = useMutation({
-    mutationFn: (id) => {
-      deleteCabin(id);
-    },
+  const { isLoading: isDeleting, mutate } = useMutation({
+    mutationFn: deleteCabin,
 
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['cabins'],
-      });
+      queryClient.invalidateQueries(['cabins']);
 
       alert('Cabin deleted succesfully');
     },
