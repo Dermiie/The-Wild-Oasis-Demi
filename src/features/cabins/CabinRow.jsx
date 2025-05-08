@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import { formatCurrency } from '../../utils/helpers';
 import { deleteCabin } from '../../services/apiCabins';
 import { useState } from 'react';
-import CreateCabinForm from './CreateCabinForm';
+import CreateEditCabinForm from './CreateCabinForm';
 
 const TableRow = styled.div`
   display: grid;
@@ -98,7 +98,9 @@ function CabinRow({ cabin }) {
           </button>
         </div>
       </TableRow>
-      {showForm && <CreateCabinForm cabinToEdit={cabin}></CreateCabinForm>}
+      {showForm && (
+        <CreateEditCabinForm cabinToEdit={cabin}></CreateEditCabinForm>
+      )}
     </>
   );
 }

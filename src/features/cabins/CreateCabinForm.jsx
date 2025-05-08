@@ -9,7 +9,7 @@ import Form from '../../ui/Form';
 import Button from '../../ui/Button';
 import FileInput from '../../ui/FileInput';
 import Textarea from '../../ui/Textarea';
-import { createCabin } from '../../services/apiCabins';
+import { createEditCabin } from '../../services/apiCabins';
 
 const FormRow = styled.div`
   display: grid;
@@ -47,7 +47,7 @@ const Error = styled.span`
   color: var(--color-red-700);
 `;
 
-function CreateCabinForm({ cabinToEdit = {} }) {
+function CreateEditCabinForm({ cabinToEdit = {} }) {
   const queryClient = useQueryClient();
   const { id: idToEdit, ...editValues } = cabinToEdit;
   const editingSession = Boolean(idToEdit);
@@ -56,8 +56,8 @@ function CreateCabinForm({ cabinToEdit = {} }) {
   });
   const { errors } = formState;
 
-  const { mutate, isLoading: isCreating } = useMutation({
-    mutationFn: createCabin,
+  const { mutate: createCabin, isLoading: isCreating } = useMutation({
+    mutationFn: createEditCabin,
 
     onSuccess: () => {
       toast.success('Cabin created successfully');
@@ -70,8 +70,26 @@ function CreateCabinForm({ cabinToEdit = {} }) {
     },
   });
 
+  const { mutate: editCabin, isLoading: isEditing } = useMutation({
+    mutationFn: ({ newDataValue, id }) => createEditCabin(newDataValue, id),
+
+    onSuccess: () => {
+      toast.success('Cabin updated successfully');
+      queryClient.invalidateQueries({ queryKey: ['cabins'] });
+      reset();
+    },
+
+    onError: (err) => {
+      toast.error(err.message);
+    },
+  });
+
+  const isWorking = isCreating || isEditing;
+
   function onSubmit(data) {
-    mutate({ ...data, image: data.image[0] });
+    // console.log(data);
+    if (editingSession) editCabin();
+    else createCabin({ ...data, image: data.image[0] });
   }
 
   function onError(error) {
@@ -83,6 +101,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
       <FormRow>
         <Label htmlFor="name">Cabin name</Label>
         <Input
+          disabled={isWorking}
           type="text"
           id="name"
           {...register('name', {
@@ -95,6 +114,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
       <FormRow>
         <Label htmlFor="maxCapacity">Maximum capacity</Label>
         <Input
+          disabled={isWorking}
           type="number"
           id="maxCapacity"
           {...register('maxCapacity', {
@@ -113,6 +133,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
       <FormRow>
         <Label htmlFor="regularPrice">Regular price</Label>
         <Input
+          disabled={isWorking}
           type="number"
           id="regularPrice"
           {...register('regularPrice', {
@@ -127,6 +148,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
       <FormRow>
         <Label htmlFor="discount">Discount</Label>
         <Input
+          disabled={isWorking}
           type="number"
           id="discount"
           defaultValue={0}
@@ -144,6 +166,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
       <FormRow>
         <Label htmlFor="description">Description for website</Label>
         <Textarea
+          disabled={isWorking}
           type="number"
           id="description"
           defaultValue=""
@@ -162,7 +185,7 @@ function CreateCabinForm({ cabinToEdit = {} }) {
           id="image"
           accept="image/*"
           {...register('image', {
-            required: 'This field is required',
+            required: editingSession ? false : 'This field is required',
           })}
         />
       </FormRow>
@@ -172,10 +195,12 @@ function CreateCabinForm({ cabinToEdit = {} }) {
         <Button variation="secondary" type="reset">
           Cancel
         </Button>
-        <Button disabled={isCreating}>Add cabin</Button>
+        <Button disabled={isWorking}>
+          {editingSession ? 'Edit Cabin' : 'Add Cabin'}
+        </Button>
       </FormRow>
     </Form>
   );
 }
 
-export default CreateCabinForm;
+export default CreateEditCabinForm;
