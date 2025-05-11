@@ -17,6 +17,13 @@ export async function createEditCabin(newCabin, id) {
 
   //Confirmimg image data to identify if it's creating or editing
 
+  if (!newCabin || !newCabin.image) {
+    console.error('Missing cabin data or image:', data);
+    return;
+  }
+
+  console.log(newCabin);
+
   const hasImagePath = newCabin.image?.startsWith?.(supabaseUrl);
 
   const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(

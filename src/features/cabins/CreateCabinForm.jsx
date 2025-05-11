@@ -71,7 +71,7 @@ function CreateEditCabinForm({ cabinToEdit = {} }) {
   });
 
   const { mutate: editCabin, isLoading: isEditing } = useMutation({
-    mutationFn: ({ newDataValue, id }) => createEditCabin(newDataValue, id),
+    mutationFn: ({ newCabinData, id }) => createEditCabin(newCabinData, id),
 
     onSuccess: () => {
       toast.success('Cabin updated successfully');
@@ -87,9 +87,12 @@ function CreateEditCabinForm({ cabinToEdit = {} }) {
   const isWorking = isCreating || isEditing;
 
   function onSubmit(data) {
-    // console.log(data);
-    if (editingSession) editCabin();
-    else createCabin({ ...data, image: data.image[0] });
+    const image = typeof data.image === 'string' ? data.image : data.image[0];
+
+    console.log(image);
+    if (editingSession)
+      editCabin({ newDataValue: { ...data, image: image }, id: idToEdit });
+    else createCabin({ ...data, image: image });
   }
 
   function onError(error) {
