@@ -91,7 +91,7 @@ function CreateEditCabinForm({ cabinToEdit = {} }) {
 
     console.log(image);
     if (editingSession)
-      editCabin({ newDataValue: { ...data, image: image }, id: idToEdit });
+      editCabin({ newCabinData: { ...data, image: image }, id: idToEdit });
     else createCabin({ ...data, image: image });
   }
 

@@ -17,8 +17,8 @@ export async function createEditCabin(newCabin, id) {
 
   //Confirmimg image data to identify if it's creating or editing
 
-  if (!newCabin || !newCabin.image) {
-    console.error('Missing cabin data or image:', data);
+  if (!newCabin) {
+    console.error('Missing cabin data or image:');
     return;
   }
 
