@@ -10,6 +10,8 @@ import Textarea from '../../ui/Textarea';
 import formDetails from '../../ui/FormRow';
 
 function CreateEditCabinForm({ cabinToEdit = {} }) {
+  const { id: idToEdit, ...editValues } = cabinToEdit;
+  const editingSession = Boolean(idToEdit);
   const { isCreating, createCabin } = useCreateCabin();
   const { isEditing, editCabin } = useEditCabin();
   const { register, handleSubmit, reset, getValues, formState } = useForm({
@@ -17,10 +19,8 @@ function CreateEditCabinForm({ cabinToEdit = {} }) {
   });
 
   const { errors } = formState;
-  const { id: idToEdit, ...editValues } = cabinToEdit;
   const { FormRow, Label, Error } = formDetails;
 
-  const editingSession = Boolean(idToEdit);
   const isWorking = isCreating || isEditing;
 
   function onSubmit(data) {
