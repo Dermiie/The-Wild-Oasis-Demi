@@ -1,4 +1,3 @@
-import { CgSpinner } from 'react-icons/cg';
 import Form from '../../ui/Form';
 import formDetails from '../../ui/FormRow';
 import Input from '../../ui/Input';
@@ -40,7 +39,7 @@ function UpdateSettingsForm() {
         />
       </FormRow>
       <FormRow>
-        <Label htmlFor="maxBookingLength">Maximum nights/booking</Label>
+        <Label htmlFor="maxBookingLength">Maximum nightss/booking</Label>
         <Input
           type="number"
           id="max-nights"
