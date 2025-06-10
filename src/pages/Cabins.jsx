@@ -10,10 +10,10 @@ function Cabins() {
         <Heading as="h1">All cabins</Heading>
         <p>Filter / Sort</p>
       </Row>
-      <Row>
+      <Row type="vertical">
         <CabinTable></CabinTable>
+        <AddCabin></AddCabin>
       </Row>
-      <AddCabin></AddCabin>
     </>
   );
 }

@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import Button from '../../ui/Button';
-import CreateCabinForm from './CreateCabinFormV1';
+import Modal from '../../ui/Modal';
+import CreateEditCabinForm from './CreateCabinForm';
 
 function AddCabin() {
   const [showCabin, setShowCabin] = useState(false);
   return (
-    <>
+    <div>
       <Button
         onClick={() => {
           setShowCabin(!showCabin);
@@ -13,8 +14,20 @@ function AddCabin() {
       >
         Add Cabin
       </Button>
-      {showCabin && <CreateCabinForm></CreateCabinForm>}
-    </>
+      {showCabin && (
+        <Modal
+          onClose={() => {
+            setShowCabin(false);
+          }}
+        >
+          <CreateEditCabinForm
+            onCloseModal={() => {
+              setShowCabin(false);
+            }}
+          ></CreateEditCabinForm>
+        </Modal>
+      )}
+    </div>
   );
 }
 
