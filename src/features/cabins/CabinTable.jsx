@@ -7,6 +7,7 @@ import { useCabins } from './useCabins';
 const Table = styled.div`
   border: 1px solid var(--color-grey-200);
   width: 100%;
+  margin-bottom: 1.6rem;
 
   font-size: 1.4rem;
   background-color: var(--color-grey-0);
