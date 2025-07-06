@@ -11,8 +11,8 @@ function Cabins() {
         <p>Filter / Sort</p>
       </Row>
       <Row type="vertical">
+        <CabinTable></CabinTable>
         <div>
-          <CabinTable></CabinTable>
           <AddCabin></AddCabin>
         </div>
       </Row>
