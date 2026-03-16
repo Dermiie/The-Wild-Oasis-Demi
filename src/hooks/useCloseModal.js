@@ -17,7 +17,7 @@ export function useCloseModal(close) {
         document.removeEventListener('click', handleClick, true);
       };
     },
-    [close]
+    [close],
   );
 
   return ref;

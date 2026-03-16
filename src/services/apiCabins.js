@@ -28,12 +28,12 @@ export async function createEditCabin(newCabin, id) {
 
   const imageName = `${Math.random()}-${newCabin.image.name}`.replaceAll(
     '/',
-    ''
+    '',
   );
 
   const imagePath = hasImagePath
     ? newCabin.image
-    : `${supabaseUrl}/storage/v1/object/public/cabin-images//${imageName}`;
+    : `${supabaseUrl}/storage/v1/object/public/cabin-images/${imageName}`;
 
   //image path format: https://cobfrvvirenhjnmctrkf.supabase.co/storage/v1/object/public/cabin-images//cabin-001.jpg
 
