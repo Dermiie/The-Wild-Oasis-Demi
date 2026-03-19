@@ -15,6 +15,7 @@ import Login from './pages/Login';
 import GlobalStyles from './styles/GlobalStyles';
 import Booking from './pages/Booking';
 import CheckIn from './pages/CheckIn';
+import ProtectedRoute from './ui/ProtectedRoute';
 
 function App() {
   const queryClient = new QueryClient({
@@ -31,7 +32,13 @@ function App() {
       <GlobalStyles></GlobalStyles>
       <BrowserRouter>
         <Routes>
-          <Route element={<AppLayout></AppLayout>}>
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout></AppLayout>
+              </ProtectedRoute>
+            }
+          >
             <Route
               index
               element={<Navigate replace to={'dashboard'}></Navigate>}
