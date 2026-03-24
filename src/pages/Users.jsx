@@ -1,7 +1,13 @@
-import Heading from "../ui/Heading";
+import SignupForm from '../features/authentication/SignupForm';
+import Heading from '../ui/Heading';
 
-function NewUsers() {
-  return <Heading as="h1">Create a new user</Heading>;
+function Users() {
+  return (
+    <>
+      <Heading as="h1">Create a new user</Heading>
+      <SignupForm></SignupForm>
+    </>
+  );
 }
 
-export default NewUsers;
+export default Users;
