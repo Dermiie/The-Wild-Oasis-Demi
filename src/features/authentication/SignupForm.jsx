@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form';
 import Button from '../../ui/Button';
 import Form from '../../ui/Form';
-import { FormRow } from '../../ui/FormRow';
 import Input from '../../ui/Input';
 import FormRowVertical from '../../ui/FormRowVertical';
 import { useSignup } from './useSignup';
@@ -77,7 +76,7 @@ function SignupForm() {
 
       <FormRowVertical>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset">
+        <Button variation="secondary" type="reset" onClick={reset}>
           Cancel
         </Button>
         <Button disabled={isLoading}>Create new user</Button>
