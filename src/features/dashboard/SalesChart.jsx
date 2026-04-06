@@ -1,6 +1,16 @@
 import styled from 'styled-components';
 import DashboardBox from './DashboardBox';
 import Heading from '../../ui/Heading';
+import {
+  Area,
+  AreaChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
+import { eachDayOfInterval, format, isSameDay, subDays } from 'date-fns';
 
 const StyledSalesChart = styled(DashboardBox)`
   grid-column: 1 / -1;
@@ -59,10 +69,67 @@ const colors = isDarkMode
       background: '#fff',
     };
 
-function SalesChart() {
+function SalesChart({ bookings, numOfDays }) {
+  const allDays = eachDayOfInterval({
+    start: subDays(new Date(), numOfDays - 1),
+    end: new Date(),
+  });
+
+  console.log(allDays);
+
+  const data = allDays.map((date) => {
+    return {
+      label: format(date, 'MMM dd'),
+      totalSales: bookings
+        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+        .reduce((acc, cur) => acc + cur.totalPrice, 0),
+      extrasSales: bookings
+        .filter((booking) => isSameDay(date, new Date(booking.created_at)))
+        .reduce((acc, cur) => acc + cur.extrasPrice, 0),
+    };
+  });
+
+  console.log(data);
+
   return (
     <StyledSalesChart>
-      <Heading as="h2"></Heading>
+      <Heading as="h2">
+        Sales from {format(allDays.at(0), 'MMM dd')} -{' '}
+        {format(allDays.at(-1), 'MMM dd')}
+      </Heading>
+
+      <ResponsiveContainer height={300} width={'100%'}>
+        <AreaChart data={data}>
+          <XAxis
+            dataKey={'label'}
+            tick={{ fill: colors.text }}
+            tickLine={{ stroke: colors.text }}
+          />
+          <YAxis
+            unit={'$'}
+            tick={{ fill: colors.text }}
+            tickLine={{ stroke: colors.text }}
+          />
+          <CartesianGrid strokeDasharray={'4'} />
+          <Tooltip contentStyle={{ backgroundColor: colors.background }} />
+          <Area
+            dataKey="totalSales"
+            type={'monotone'}
+            stroke={colors.totalSales.stroke}
+            fill={colors.totalSales.fill}
+            name="Total sales"
+            unit={'$'}
+          ></Area>
+          <Area
+            dataKey="extrasSales"
+            type={'monotone'}
+            stroke={colors.extrasSales.stroke}
+            fill={colors.extrasSales.fill}
+            name="Extra sales"
+            unit={'$'}
+          ></Area>
+        </AreaChart>
+      </ResponsiveContainer>
     </StyledSalesChart>
   );
 }
